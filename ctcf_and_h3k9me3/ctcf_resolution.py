@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # ### Analyze peak center resolution and methylation decay (separate L and R)
 # ### At the strongest peaks, what's the achievable resolution
 # #### Annie Maslan
 # #### 06.27.21
 # ##### Call peaks in quartile 4. For reads with peak, what is the distance from the motif center?
-
-# In[26]:
-
 
 import os
 import numpy as np

@@ -406,7 +406,6 @@ def main():
 
 	peak_left, peak_right = extract_peak_pairs(top_bed_path, min_dist, max_dist, out)
 
-	# 625 peak pairs
 	print('number of peaks: ' + str(peak_left.shape[0]))
 	# make windows for the peak files
 	peak_left_windows = make_windows(peak_left)

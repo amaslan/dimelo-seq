@@ -142,7 +142,6 @@ def parse_ont_bam(filename, name, window, thresh, window_size):
 	bam = pysam.AlignmentFile(filename, "rb")
 	data = []
 	for read in bam.fetch(reference=window.chromosome, start=window.begin, end=window.end):
-		#if not read.is_supplementary and not read.is_secondary:
 		[(mod, positions, quals), (mod2, positions2, quals2)] = get_modified_reference_positions(read, window)
 		for pos, qual in zip(positions, quals):
 			if pos is not None:
@@ -239,7 +238,7 @@ def get_pos_prob(read, basemod, index, window):
 	i = 0
 	seq = read.get_forward_sequence()
 	# deal with None for refpos from soft clipped / unaligned bases
-	if 'C' in basemod: #if 'C+m' in basemod:
+	if 'C' in basemod: 
 		for m in modified_bases:
 			if m < len(seq) - 1: # if modified C is not the last base in the read	
 				if (refpos[m] is not None) & (refpos[m+1] is not None):
@@ -405,10 +404,10 @@ def make_mod_plot(all_data, mod, color, window_size, out, name, smooth, all_base
 def make_aggregate_plot_overlay(mod_mean_rolling_list, mod, out, name, max_y):
 	fig = plt.figure()
 	colors = ['#2D1E2F','#610345','#559CAD','#A9E5BB']
-	if 'A' in mod: #mod == 'A+a':
+	if 'A' in mod: 
 		for m, c in zip(mod_mean_rolling_list, colors):
 			sns.lineplot(data=m, color=c);
-	if 'C' in mod: #mod == 'C+m':
+	if 'C' in mod: 
 		for m, c in zip(mod_mean_rolling_list, colors):
 			sns.lineplot(data=m, color=c);
 	plt.legend(['q4', 'q3', 'q2', 'q1'])

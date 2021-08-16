@@ -5,7 +5,7 @@ module load samtools/1.8
 BAMS='/bams/guppywinnow'
 BEDS='/beds'
 HK9me3_CUTRUN='HG2_K9Me3_ADGCCR09-H_S103_L002_2.chm13_HG002X_HG38Y_peaks.broadPeak'
-SCRIPTS='/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/h3k9me3/scripts'
+SCRIPTS='/scripts'
 CEN='t2t_cenAnnotation.v2.021921.hg002_X.4.bed'
 REF='/ref'
 HOR='t2t_cenAnnotation.v2.021921.liveHORonly.HG002.4.sorted.bed'

@@ -170,7 +170,6 @@ def get_data(methylation_files, names, window, thresh):
 	Frequencies are smoothened using a sliding window
 	"""
 	return [parse_ont_bam(f, n, window, thresh) for f, n in zip(methylation_files, names)]
-	#return[parse_ont_cram(methylation_files, names, window, thresh)]
 
 def parse_ont_bam(filename, name, window, thresh):
 	'''
@@ -180,11 +179,9 @@ def parse_ont_bam(filename, name, window, thresh):
 	bam = pysam.AlignmentFile(filename, "rb")
 	data = []
 	for read in bam.fetch(reference=window.chromosome, start=window.begin, end=window.end):
-		#if not read.is_supplementary and not read.is_secondary:
 		[(mod, positions, quals), (mod2, positions2, quals2)] = get_modified_reference_positions(read, window)
 		for pos, qual in zip(positions, quals):
 			if pos is not None:
-				#if qual >= thresh: 
 				data.append((read.query_name,
 					'-' if read.is_reverse else '+',
 					pos,
@@ -192,7 +189,6 @@ def parse_ont_bam(filename, name, window, thresh):
 					mod))
 		for pos, qual in zip(positions2, quals2):
 			if pos is not None:
-				#if qual >= thresh:
 				data.append((read.query_name,
 					'-' if read.is_reverse else '+',
 					pos,
@@ -484,11 +480,7 @@ def make_per_read_line_trace(read_range, y_pos, strand, phase=None):
 					  y=[y_pos, y_pos],
 					  mode='lines', #'lines+markers','
 					  line=dict(width=1, color='lightgrey'),
-					  showlegend=False)#,
-					  #marker=dict(size=8, # remove symbol=symbol
-								 # color=color,
-								  #line=dict(width=0.5,
-											#color='black')))
+					  showlegend=False)
 
 def meth_browser(meth_data, window, gtf=False, bed=False, simplify=False,
 				 split=False, outfile=None, dotsize=4, static=False, binary=False, thresh=128):

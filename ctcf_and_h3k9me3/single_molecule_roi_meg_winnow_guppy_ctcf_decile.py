@@ -143,7 +143,6 @@ def parse_ont_bam(filename, name, window, thresh, window_size):
 	bam = pysam.AlignmentFile(filename, "rb")
 	data = []
 	for read in bam.fetch(reference=window.chromosome, start=window.begin, end=window.end):
-		#if not read.is_supplementary and not read.is_secondary:
 		[(mod, positions, quals), (mod2, positions2, quals2)] = get_modified_reference_positions(read, window)
 		for pos, qual in zip(positions, quals):
 			if pos is not None:
@@ -205,8 +204,8 @@ def get_pos_prob(read, basemod, index, window):
 	'''
 	if '-' in basemod:
 		sys.exit("ERROR: modifications on negative strand currently unsupported.")
-	if 'A' not in basemod: #if 'A+a' not in basemod:
-		if 'C' not in basemod: #if 'C+m' not in basemod
+	if 'A' not in basemod: 
+		if 'C' not in basemod: 
 			return (None, [None], [None])
 	base, mod = basemod.split('+')
 	deltas = [int(i) for i in read.get_tag('Mm').split(';')[index].split(',')[1:]]
