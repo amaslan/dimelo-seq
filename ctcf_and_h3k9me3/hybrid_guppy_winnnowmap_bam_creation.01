@@ -1,0 +1,71 @@
+#hybrid guppy/winnnowmap bam creation
+#2021.06.01 OKS
+
+#takes alignment info from winnowmap bam output
+#adds Mm and Ml tags from guppy bam output
+
+#requires samtools
+	# specify threads availible with -@ for parallelization 
+
+#run in bash with for loop for 4 barcodes
+cd /path/to/guppy/output
+
+#guppy outputs several bams, first need to combine into one merged bam
+#merge output bams
+#for 17, 18, 19, 20
+cd /path/to/guppy/output
+
+#create file with list of bams to merge
+for file in bam*bam;
+do
+echo $file >> bam_list.txt
+done
+
+#merge all bams in list
+samtools merge -b bam_list.txt -@ *threads available* bar17_guppy_merge.bam
+
+#now extract guppy mod_basecalls and read ids (readid, length, Mm, Ml)
+
+for n in 17 18 19 20;
+do
+samtools view 'bar'$n'/bar'$n'_guppy_merge.bam' | awk -F '\t' 'BEGIN {OFS=FS}{print $1, $9, $12, $13}' > 'bar'$n'/bar'$n'_guppy_merge_extract.txt'
+done
+
+#get winnow map s/bam header
+cd /path/to/winnnowmap/output
+
+for n in 17 18 19 20;
+do
+samtools view -H 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.sorted.bam' > 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.header.txt'
+done
+
+#combine by readid
+for n in 17 18 19 20;
+do
+#first remove unmapped (4), secondary (256), and supplemental (2048) alignments, 4+256+2048=2308
+samtools view -b -@ *threads available* -F 2308 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.sorted.bam' > 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.sorted.clean.bam' 
+
+#next join winnowmap alignment with guppy Mm and Ml, **here also give TLEN from guppy (2.2 in field 9)***
+#sort by readid before joining
+join -j 1 -t $'\t' -o 1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,2.2,1.10,1.11,2.3,2.4 <(samtools view 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.sorted.clean.bam' | sort -k1) <(sort -k1 '/scratch/groups/astraigh/minion_seq/guppy_basecalling/DiMeLo_cen_enrich_trial1/bar'$n'.2/bar'$n'_guppy_merge_extract.txt') > 'bar'$n'/barcode'$n'_winnnowmap_merge.3.txt'
+
+#remove alignments with empty Mm and Ml, these were causing problems when converting to bam
+grep -v 'Mm:Z:A+a;C+m;' 'bar'$n'/barcode'$n'_winnnowmap_merge.3.txt' > 'bar'$n'/barcode'$n'_winnnowmap_merge.3.2.txt'
+done
+
+#build combined sam
+for n in 18 19 20;
+do
+#add header
+cat 'bar'$n'/winnowmap_alignT2Tv1.0.barcode'$n'.header.txt' > 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.sam'
+
+#add hybrid, clean read info
+cat 'bar'$n'/barcode'$n'_winnnowmap_merge.3.2.txt' >> 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.sam'
+
+convert to bam
+samtools view -@ *threads available* -b 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.sam' > 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.bam'
+samtools sort -@ *threads available* 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.bam' > 'bar'$n'/barcode'$n'_winnnowmap_guppy_merge.sorted.bam'
+done
+
+# also performed additional filtering for mapq10 with samtools view -q 10
+
