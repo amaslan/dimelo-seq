@@ -1,4 +1,5 @@
 #basecalling LMNB1 DiMeLo-seq data on AWS
+
 #log in to AWS g4dn.metal instance running Ubuntu 18
 ssh -i "keys.pem" ec2-3-85-231-198.compute-1.amazonaws.com -l ubuntu
 
