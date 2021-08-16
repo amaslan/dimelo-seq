@@ -8,7 +8,7 @@
 - single_molecule_roi_meg_winnow_guppy_ctcf_center.py
 #### **Required files:**
 - mod_mappings.sorted.bam - bam output from megalodon basecalling
-- beds/intersection.motifs.chip.formatted.chm13.bed - bed file specifying CTCF motifs within CTCFChIP-seq peaks
+- beds/intersection.motifs.chip.formatted.chm13.bed - bed file specifying CTCF motifs within CTCF ChIP-seq peaks
 
 ### Fig 4b.
 #### **Script:**
@@ -21,20 +21,20 @@
 - single_molecule_joint_ctcf.py
 
 #### **Required files:**
-- mod_mappings.sorted.bam - from megalodon basecalling
-- beds/intersection.motifs.chip.formatted.chm13.bed 
+- mod_mappings.sorted.bam - bam output from megalodon basecalling
+- beds/intersection.motifs.chip.formatted.chm13.bed - bed file specifying CTCF motifs within CTCF ChIP-seq peaks
 
 
 ### Supplementary 4a
 #### **Scripts:**
-- ParseModMappings.hash&#46;mA&#46;pl - extract a list of all mA mod probabilities from the mod_mappings bam file output by megalodon
-- run_mA_A_peaks_calcs_ctcf.sh - create bed files for computing enrichment for 4a
-- enrichment.ipynb 
+- ParseModMappings.hash&#46;mA&#46;pl - extract a list of all mA mod probabilities from the mod_mappings.bam file output by megalodon
+- run_mA_A_peaks_calcs_ctcf.sh - create bed files for computing enrichment for supplementary figure 4a
+- enrichment.ipynb - create barplot for supplementary figure 4a
 
 #### **Required files:**
-- mod_mappings.sorted.bam
-- beds/ENCFF797SDL.chm13.bed
-- data/ctcf_enrich.csv - created from run_mA_A_peaks_calcs_ctcf.sh
+- mod_mappings.sorted.bam - bam output from megalodon basecalling
+- beds/ENCFF797SDL.chm13.bed - CTCF ChIP-seq peaks
+- data/ctcf_enrich.csv - calculated from bed files produced from run_mA_A_peaks_calcs_ctcf.sh
 
 ### Supplementary 4b
 #### **Scripts:**
@@ -51,8 +51,8 @@
 - ctcf_analysis.ipynb
 
 #### **Required files:**
-- mod_mappings.sorted.bam
-- beds/intersection.motifs.chip.formatted.chm13.bed
+- mod_mappings.sorted.bam - bam output from megalodon basecalling
+- beds/intersection.motifs.chip.formatted.chm13.bed - bed file specifying CTCF motifs within CTCF ChIP-seq peaks
 - meg_CTCF_CTCF_qX_all_data_mA.csv, meg_IgG_CTCF_qX_all_data_mA.csv - use these files for q1 to q10 output from single_molecule_roi_meg_winnow_guppy_ctcf_decile.py for ctcf_analysis.ipynb
 
 
@@ -64,13 +64,13 @@ See instructions here: hybrid_guppy_winnnowmap_bam_creation
 ### Figure 5a, 5b
 
 #### **Scripts:**
-- run_mA_A_peaks_calcs_h3k9me3.sh
+- run_mA_A_peaks_calcs_h3k9me3.sh - create bed files for computing enrichment
 - ParseModMappings.hash&#46;mA&#46;pl - extract a list of all mA mod probabilities from the hybrid guppy & winnowmap bam
-- enrichment.ipynb
+- enrichment.ipynb - create barplots for Figures 5a and 5b
 
 #### **Required files:**
-- data/k9me3_enrich.csv - created from run_mA_A_peaks_calcs_h3k9me3.sh
-- beds/HG2_K9Me3_ADGCCR09-H_S103_L002_2.chm13_HG002X_HG38Y_peaks.broadPeak - CUT&RUN
+- data/k9me3_enrich.csv - calculated from bed files produced from run_mA_A_peaks_calcs_h3k9me3.sh
+- beds/HG2_K9Me3_ADGCCR09-H_S103_L002_2.chm13_HG002X_HG38Y_peaks.broadPeak - CUT&RUN peaks
 - beds/t2t_cenAnnotation.v2.021921.hg002_X.4.bed - centromeres
 - beds/t2t_cenAnnotation.v2.021921.liveHORonly.HG002.4.sorted.bed - live HOR arrays
 - franken.chromsizes.txt - chromosome sizes for franken reference
@@ -88,7 +88,7 @@ See instructions here: hybrid_guppy_winnnowmap_bam_creation
 - For showing just a signle modification (mA or mCG in Supplementary Figure 6b, comment out traces.append() --> see "comment out for single mod plot")
 
 #### **Required files:**
-- guppy_winnow_hybrid.bam
+- guppy_winnow_hybrid.bam - created from instructions above
 
 #### **Other tools**
 For aggregate curves:
