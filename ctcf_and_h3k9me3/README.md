@@ -3,18 +3,18 @@
 
 ## CTCF - Figure 4 and Supplementary Figures 4&5 
 
-### Fig 4a, 4c, and Supplementary Figure 5.
+### Fig 4a, 4c, and Supplementary Figure 5
 #### **Script:**
-single_molecule_roi_meg_winnow_guppy_ctcf_center.py
+- single_molecule_roi_meg_winnow_guppy_ctcf_center.py
 #### **Required files:**
-mod_mappings.sorted.bam - from megalodon basecalling
-beds/intersection.motifs.chip.formatted.chm13.bed
+- mod_mappings.sorted.bam - bam output from megalodon basecalling
+- beds/intersection.motifs.chip.formatted.chm13.bed - bed file specifying CTCF motifs within CTCFChIP-seq peaks
 
 ### Fig 4b.
 #### **Script:**
-ctcf_resolution.py
+- ctcf_resolution.py
 #### **Required files:**
-After running script single_molecule_roi_meg_winnow_guppy_ctcf_center.py, use the output ctcf_allquart4_all_data_mA.csv as input to this script
+- After running script single_molecule_roi_meg_winnow_guppy_ctcf_center.py, use the output ctcf_allquart4_all_data_mA.csv as input to this script
 
 ### Fig 4d.
 #### **Script:**
@@ -38,10 +38,10 @@ After running script single_molecule_roi_meg_winnow_guppy_ctcf_center.py, use th
 
 ### Supplementary 4b
 #### **Scripts:**
-ctcf_analysis.ipynb
+- ctcf_analysis.ipynb
 
 #### **Required Files:**
-After running script single_molecule_roi_meg_winnow_guppy_ctcf_center.py, use ctcf_allquart4_all_data_mA.csv as input
+- After running script single_molecule_roi_meg_winnow_guppy_ctcf_center.py, use ctcf_allquart4_all_data_mA.csv as input
 
 
 ### Supplementary 4c
@@ -92,7 +92,7 @@ See instructions here: hybrid_guppy_winnnowmap_bam_creation
 
 #### **Other tools**
 For aggregate curves:
-- Plotted using the WashU epigenome browser - https://epigenomegateway.wustl.edu
+- Plotted usings the WashU epigenome browser - https://epigenomegateway.wustl.edu
 - Bedgraph files for plotted created by outputting all_data_mA and all_data_mC dataframes from single_molecule_plotly_k9me3.py as csv's and then running the below for data_A and data_C analagously.
 ```
 data_A = pd.read_csv('all_data_mA.csv')
