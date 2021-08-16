@@ -2,7 +2,7 @@
 
 # #Use this script for analyses of all reads that align to a region of interest from DiMeLo-seq in vivo or in situ, for plotting aggregate mA/A,
 # also outputs nucleosome density within rolling window for region of reads that map within the window.
-# Input - hybrid Guppy + winnowmap bams processed to csv files containing the following:
+# Input - hybrid Guppy + winnowmap bams processed to csv files (that are output from DiMeLoseq_in_situ_roi_single_molecule_v7_q10.py) containing the following:
 # ReadID | array of NaN's or probability score of methylation where, NaN ==> non-A basepair position or not covered, probability score 0 - 255
 
 # First part of the code reads in csv file, calculates average mA/A (with binning for ex. by averaging over 1kb rolling window for better visualization),
