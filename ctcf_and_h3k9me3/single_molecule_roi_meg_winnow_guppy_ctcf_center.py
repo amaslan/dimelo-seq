@@ -231,7 +231,7 @@ def get_pos_prob(read, basemod, index, window):
 	refpos = np.array(read.get_reference_positions(full_length=True))
 	if read.is_reverse:
 		refpos = np.flipud(refpos)
-		probabilities = probabilities[::-1]	
+		# probabilities = probabilities[::-1]	
 	# extract CpG sites only rather than all mC
 	keep = []
 	prob_keep = []
