@@ -152,7 +152,10 @@ for j in mod:
         fig.savefig(outfolder + Chromosome_Region + '_250kb_bin1kb_' + Barcode_name[i] + '_' + j + '_' + str(window[0]) + '_' + str(window[1]) + '.png', dpi=300, bbox_inches='tight')
         plt.show()
 
+###This part of the code below is obsolete and corresponds to the initial submission of DiMeLoseq manuscript and the BioRXiv preprint. Please refer to DiMeLoseq_guppy_winnowmap_ChrX_CDR_300kb_5745_5775_2022.03.22_Git.ipynb instead
 
+        
+        
 ### Part 2: finding rolling 'prob_bin_size' bp bins with probability of at least 1 mA > 'thr', calculating nucleosome density per read
 
 #binning probability and thresholding p(at least 1 mA) > 0.9 (for example)
