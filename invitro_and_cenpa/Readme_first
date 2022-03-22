@@ -6,6 +6,9 @@
 
 ## Figure 2 and Extended Data Figures 1,2 (in vitro DiMeLo-seq):
 
+# pGEM_3z_1X601_730bp.fa - fasta file of template for 1x601 DNA sequence
+# ASP696_18x601.fa - fasta file of template for 18x601 DNA sequence (full plasmid sequence)
+
 # DiMeLoseq_in_vitro_fastq_to_length_filtered_bam.sh
 
 #bash script for processing fastq output of Megalodon/Guppy to make length filtered bam files. (filtering out reads > 3.6 kb ==> reads containing the full 18x601 array sequence)
