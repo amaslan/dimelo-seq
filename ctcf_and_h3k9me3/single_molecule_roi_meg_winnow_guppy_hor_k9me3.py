@@ -333,18 +333,18 @@ def main():
 	out = "out"
 
 	# 0-255
-	thresh = 230 #thresh90
+	thresh = 153
 
 	# will plot non-overlapping features in -window_size to +window_size
 	window_size = 300000
 
 	# number of bases to smooth over for moving average curve
-	smooth = 60000
+	smooth = 100000
 
 	beds = ["sharp_HOR_boundaries.300kb.bed"]
 
 	# name for plots
-	names = ["H3K9me3_HOR_boundaries_300kb_60", "Hia5_HOR_boundaries_300kb_60", "IgG_HOR_boundaries_300kb_60"]
+	names = ["H3K9me3_HOR_boundaries_300kb_100", "Hia5_HOR_boundaries_300kb_100", "IgG_HOR_boundaries_300kb_100"]
 	#### end of parameters and run-specific file paths ####
 
 

@@ -1,4 +1,0 @@
-﻿sample #,target,cell type,total A genome-wide,total A in chip/cut&run peaks,mA genome-wide,mA in chip/cut&run,mA/A genome-wide,mA/A in chip/cut&run,mA/A in target over mA/A not in peaks
-4,CTCF,GM12878,1656892198,6400273,2219846,171620,0.00134,0.026814,21.608
-5,IgG,GM12878,1472043472,5724871,109963,1822,0.000075,0.000318,4.315
-6,free pA-Hia5,GM12878,1440077917,5607119,4243776,101695,0.002947,0.018137,6.281

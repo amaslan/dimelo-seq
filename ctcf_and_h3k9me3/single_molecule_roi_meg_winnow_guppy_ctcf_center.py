@@ -382,9 +382,9 @@ def make_mod_plot(all_data, mod, color, window_size, out, name, smooth, all_base
 	cax = divider.append_axes('top', size='5%', pad=0.25)
 	fig.colorbar(im, cax=cax, orientation='horizontal')
 	if 'A' in mod:
-		im.set_clim(1000,10000)
+		im.set_clim(0,72000)
 	if 'C' in mod:
-		im.set_clim(0, 3700)
+		im.set_clim(0,20000)
 	ax.set_yticks([])
 	ax.set_xlim(extent[0], extent[1])
 	ax2.plot(x,y,'o',ms=0.5,color='#2D1E2F')
@@ -603,7 +603,7 @@ def main():
 	out = "results"
 
 	# 0-255
-	thresh = 230 # thresh90
+	thresh = 190
 
 	# will plot non-overlapping features in -window_size to +window_size
 	window_size = 1000
@@ -684,7 +684,7 @@ def main():
 		base_list_tables.append(b)
 	all_base_pos_data = pd.concat(base_list_tables)
 
-	resolution_analysis(all_data, all_base_pos_data, window_size, out, 'untreated_allquart4')
+	resolution_analysis(all_data, all_base_pos_data, window_size, out, 'untreated_allquart4') # updated to top decile in revisions
 
 	i = 0
 	for bam in bams:
@@ -721,7 +721,7 @@ def main():
 			mod_mean_rolling_list_mA.append(mean_rolling_mA)
 			mod_mean_rolling_list_mC.append(mean_rolling_mC)
 
-			# estimate decay rate from q4
+			# estimate decay rate from q4 --> updated to top decile in revisions
 			if names[i].count('q4') > 0: #if i == 0:
 				resolution_analysis(all_data, all_base_pos_data, window_size, out, names[i])
 
@@ -730,8 +730,8 @@ def main():
 			plt.close('all')
 
 		### make aggregate curve overlays ###
-		max_y_A = 0.0225 # so targeting and controls all on same scale 
-		max_y_C = 0.04 # so targeting and controls all on same scale
+		max_y_A = 0.135 # so targeting and controls all on same scale 
+		max_y_C = 0.16 # so targeting and controls all on same scale
 		make_aggregate_plot_overlay(mod_mean_rolling_list_mA, 'A', out, names[i-1], max_y_A) 
 		make_aggregate_plot_overlay(mod_mean_rolling_list_mC, 'C', out, names[i-1], max_y_C) 
 
@@ -753,7 +753,7 @@ def main():
 		all_base_pos_data = pd.concat(base_list_tables)
 		
 
-		plot_joint_mA_mC(all_data, all_base_pos_data, window_size, 'top' + names[i-1], out, thresh, smooth)
+		plot_joint_mA_mC(all_data, all_base_pos_data, window_size, 'top' + names[i-1], out, thresh, smooth) # updated to top decile in revisions
 
 
 

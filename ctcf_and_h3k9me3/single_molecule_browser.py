@@ -3,16 +3,16 @@
 # input from guppy&winnow merge or megalodon
 #
 # use:
-# python single_molecule.py -i <bam_file(s)> -w <window> -t <thresh> -b <bed_file> -n <name(s)> 
+# python single_molecule_browser.py -i <bam_file(s)> -w <window> -t <thresh> -b <bed_file> -n <name(s)> 
 #
 # example use:
-# python single_molecule_plotly_meg_winnow_guppy_FINAL.py -i \
+# python single_molecule_browser.py -i \
 # /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/h3k9me3/bams/guppywinnow/prod_H3K9me3_winnowmap_guppy_merge.sorted.q10.bam \
 # /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/h3k9me3/bams/guppywinnow/prod_Hia5_HG002_winnowmap_guppy_merge.sorted.q10.bam \
 # /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/h3k9me3/bams/guppywinnow/prod_IgG_HG002_winnowmap_guppy_merge.sorted.q10.bam \
 # -t 230 -w chr8:43000000-45000000 -n H3K9me3 Hia5 IgG
 
-# python single_molecule_plotly_meg_winnow_guppy.py -i /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/20210506/h3k9me3/sre_guppy_winnow/20210524_1_SRE_winnnowmap_guppy_merge.sorted.bam \
+# python single_molecule_browser.py -i /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/20210506/h3k9me3/sre_guppy_winnow/20210524_1_SRE_winnnowmap_guppy_merge.sorted.bam \
 # -w chr6:58000000-62000000 -t 128 -b /clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/h3k9me3/sm/t2t_cenAnnotation.v2.021921.cen6.all.bed \
 # -n H3K9me3
 #
@@ -258,8 +258,7 @@ def get_pos_prob(read, basemod, index, window):
 	modified_bases = base_index[index_adj]
 	refpos = np.array(read.get_reference_positions(full_length=True))
 	if read.is_reverse:
-		refpos = np.flipud(refpos)
-		# probabilities = probabilities[::-1]	
+		refpos = np.flipud(refpos)	
 	# extract CpG sites only rather than all mC
 	keep = []
 	prob_keep = []

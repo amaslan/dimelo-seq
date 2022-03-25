@@ -165,7 +165,6 @@ def get_pos_prob(read, basemod, index, w1, w2):
 	refpos = np.array(read.get_reference_positions(full_length=True))
 	if read.is_reverse:
 		refpos = np.flipud(refpos)
-		# probabilities = probabilities[::-1]	
 	# extract CpG sites only rather than all mC
 	keep = []
 	prob_keep = []
@@ -256,7 +255,7 @@ def make_cluster_plot(all_data, all_data_C, thresh, out, name):
 	for i in range(0, all_data_pivoted_0.shape[0]):
 		all_data_pivoted_mod_0_rolling = all_data_pivoted_mod_0_rolling.append(all_data_pivoted_0.iloc[i,:].rolling(window=5).mean()) #33
 	all_data_pivoted_mod_0_rolling_0 = all_data_pivoted_mod_0_rolling.fillna(0)
-	k = KMeans(n_clusters=4, random_state=1) # try different numbers of clusters #2
+	k = KMeans(n_clusters=3, random_state=1) # try different numbers of clusters #2
 	k.fit(all_data_pivoted_mod_0_rolling_0)
 
 	# sort by left peak signal strength after labels
@@ -398,6 +397,7 @@ def main():
 	max_dist = 10000
 
 	# just look at top 50% ChIP seq peaks sorted by signal strength
+	# for revisions considere all ChIP-seq peaks and not just top 50%
 	b = pd.read_csv(bed, sep='\t', header=None)
 	bed_sorted = b.sort_values(by=b.columns[4], ascending=False)
 	mid = bed_sorted[4].quantile(q=0.5)
