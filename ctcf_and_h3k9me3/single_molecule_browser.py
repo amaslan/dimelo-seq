@@ -25,6 +25,8 @@
 #
 # Annie Maslan
 # 06.08.21
+# Significant portions of code for bam parsing and plotting adapted from methplotlib (Copyright (c) 2018 Wouter De Coster)
+# https://github.com/wdecoster/methplotlib
 
 
 

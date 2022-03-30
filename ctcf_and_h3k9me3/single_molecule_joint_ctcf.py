@@ -1,6 +1,8 @@
 # create plot as in Figure 4d to study joint occupancy at neighboring CTCF sites
 # ## Annie Maslan
 # ## 06.30.21
+# Significant portions of code for bam parsing adapted from methplotlib (Copyright (c) 2018 Wouter De Coster)
+# https://github.com/wdecoster/methplotlib
 import sys
 import os
 import pandas as pd

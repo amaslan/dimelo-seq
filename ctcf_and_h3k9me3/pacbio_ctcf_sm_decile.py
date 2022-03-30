@@ -1,4 +1,6 @@
 # parse pacbio bam file for raw IPD and IPD ratio and number of passes
+# Significant portions of code for bam parsing adapted from methplotlib (Copyright (c) 2018 Wouter De Coster)
+# https://github.com/wdecoster/methplotlib
 
 import pandas as pd
 import pyranges as pr

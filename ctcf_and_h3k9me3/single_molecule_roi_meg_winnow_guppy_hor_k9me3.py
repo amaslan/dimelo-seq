@@ -8,6 +8,9 @@
 # 2. Extract reads
 # 3. Plot modified bases and aggregate across boundaries
 
+# Significant portions of code for bam parsing adapted from methplotlib (Copyright (c) 2018 Wouter De Coster)
+# https://github.com/wdecoster/methplotlib
+
 
 import sys
 import os
