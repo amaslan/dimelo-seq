@@ -1,3 +1,5 @@
+# instructions for phasing reads for Fig. 4d and Extended Data Fig. 7
+
 #####--------
 ####obtain VCF
 

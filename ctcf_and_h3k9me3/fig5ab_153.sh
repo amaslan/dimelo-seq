@@ -1,4 +1,4 @@
-
+# mA and A calculations in regions of interest for Fig 5a,b
 
 
 BEDS='/beds'

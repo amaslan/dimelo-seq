@@ -49,7 +49,7 @@ for d in all_data:
 print(frac)
 
 # repeat for igg
-bams = ["/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/megalodon/prod_IgG_mod_mappings.sorted.bam"]
+bams = ["prod_IgG_mod_mappings.sorted.bam"]
 names = ['igg_q1', 'igg_q2', 'igg_q3', 'igg_q4', 'igg_q5', 'igg_q6', 'igg_q7', 'igg_q8', 'igg_q9', 'igg_q10']
 all_data_igg = []
 for b, n in zip(beds[::-1], names[::-1]):

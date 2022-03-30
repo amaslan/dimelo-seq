@@ -1,4 +1,4 @@
-
+# calculations for overall mA/A in regions of interest to produce Extended Data Fig 5b,c
 
 BEDS='/path/to/bed/files'
 OUT='/path/to/out/dir'
@@ -23,7 +23,7 @@ for NAME in deep_ctcf prod_Hia5 prod_IgG;
 do
 
 # calculate #A and #mA sequenced at each position and make new bed file rather than summarizing by max
-# try wrt to what we sequence rather than wrt to reference so we don't need to take max
+# wrt to what we sequence rather than wrt to reference so we don't need to take max
 # megalodon threshold is 190
 awk '$1=$1' FS="," OFS="\t" $BEDS'/'$NAME'.mA.bed' | awk '{meth=0;for(i=4;i<=NF;i++)if($i>=190)meth=meth+1;print $1, $2, $3, NF-3, meth}' | awk -v OFS="\t" '{print $1, $2, $3, $4, $5}' > $BEDS'/'$NAME'.mA.t190.all.bed'
 

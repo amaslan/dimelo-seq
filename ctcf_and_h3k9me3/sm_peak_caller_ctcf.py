@@ -1,8 +1,7 @@
-# ### Analyze peak center resolution and methylation decay (separate L and R)
-# ### At the strongest peaks, what's the achievable resolution
+# ### Single-molecule peak calling to determine for reads with a peak, what is the distance of the
+# ### predicted peak from the motif center
 # #### Annie Maslan
 # #### 11.27.21
-# ##### Call peaks in top decile. For reads with peak, what is the distance from the motif center?
 
 import os
 import numpy as np
@@ -22,7 +21,7 @@ import itertools
 
 out = 'out'
 
-ctcf_mA = pd.read_csv('top_decile_mA.csv') # similarly for untreated for control
+ctcf_mA = pd.read_csv('top_decile_mA.csv') # similarly for untreated for control; output from single_molecule_roi_meg_winnow_guppy_ctcf_decile.py
 
 print(len(ctcf_mA['read_name'].unique()))
 print('ctcf A: ' + str(ctcf_mA.shape[0]))

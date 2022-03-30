@@ -176,8 +176,7 @@ refLengthDict = {}
 
 refid = 0
 
-lutPath = "/global/scratch/users/amaslan/pacbio/kineticsTools/kineticsTools/resources/SP3-C3.npz.gz"
-#lutPath = "./kineticsTools/resources/SP3-C3.npz.gz"
+lutPath = "./kineticsTools/resources/SP3-C3.npz.gz"
 
 with gzip.open(lutPath, "rb") as npz_in:
     gbmModelData = np.load(npz_in, allow_pickle=True)
