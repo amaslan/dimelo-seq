@@ -1,5 +1,7 @@
 ### README ###
 
+###This file is obsolete and corresponds to the initial submission of the DiMeLoseq manuscript and BioRxiv preprint.###
+
 # #Use this script for analyses of individual reads from DiMeLo-seq in vitro, for plotting mA, clustering reads based on mA positions, 
 # for calling nucleosomes on individual reads, and for plotting mA probability with respect to the called nucleosome position
 # for plotting histogram of called nucleosome center from 601 dyad axis for all reads in a library

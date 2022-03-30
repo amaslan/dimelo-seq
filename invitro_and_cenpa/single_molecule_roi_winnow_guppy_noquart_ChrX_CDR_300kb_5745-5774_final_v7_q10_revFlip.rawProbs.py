@@ -1,5 +1,6 @@
 # # Single molecules centered at region of interest
-# ## Annie Maslan, modified by Kousik Sundararajan
+# ## Annie Maslan
+# ## 06.04.21
 
 # Input: bed file of coordinates where single molecules should be centered, mod_mappings.bam, mod_mappings.bam.bai
 
@@ -242,7 +243,7 @@ def get_pos_prob(read, basemod, index, window):
 	refpos = np.array(read.get_reference_positions(full_length=True))
 	if read.is_reverse:
 		refpos = np.flipud(refpos)
-		probabilities = probabilities[::-1]	
+		#probabilities = probabilities[::-1]	
 	# extract CpG sites only rather than all mC
 	keep = []
 	prob_keep = []
@@ -357,30 +358,40 @@ def make_mod_plot(all_data, mod, color, window_size, out, name, smooth, all_base
 	return
 
 def main():
-	#insert filepath to input hybrid bam file (from Guppy + Winnowmap), alternately, use Megalodon bam file
-	#bams = [<filepath_1>,<filepath_2>, etc]
-	bams = ["/scratch/groups/astraigh/minion_seq/guppy_winnow_merge/DiMeLo_cen_enrich_merge_2021.06.19/CA/CA_merge.sorted_q10.bam"]
+	#### start of parameters and run-specific file paths ####
+	#bams = ["/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/megalodon/prod_ctcf_mod_mappings_merge.sorted.bam"]
+	#bams = ["/scratch/groups/astraigh/minion_seq/guppy_winnow_merge/DiMeLo_cen_enrich_merge_2021.06.19/free/free_merge.sorted_q10.bam","/scratch/groups/astraigh/minion_seq/guppy_winnow_merge/DiMeLo_cen_enrich_merge_2021.06.19/CA/CA_merge.sorted_q10.bam","/scratch/groups/astraigh/minion_seq/guppy_winnow_merge/DiMeLo_cen_enrich_merge_2021.06.19/IgG/IgG_merge.sorted_q10.bam","/scratch/groups/astraigh/minion_seq/guppy_winnow_merge/DiMeLo_cen_enrich_merge_2021.06.19/unt/unt_merge.sorted_q10.bam"]
+	bams = ["/oak/stanford/groups/astraigh/minION/DiMeLo_processed_file_backup/guppy_winnowmap/DiMeLo_cen_enrich_merge_2021.11.15/CA/CA_merge.sorted_q10.bam"]
+	#bams = ["/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/guppywinnow/prod_CTCF_winnowmap_guppy_merge.sorted.bam",
+	#"/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/guppywinnow/20210512_6/20210512_6_winnnowmap_guppy_merge.sorted.bam",
+	#"/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/guppywinnow/20210513_5/20210513_5_winnnowmap_guppy_merge.sorted.bam",
+	#"/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/guppywinnow/20210428_7/20210428_7_winnnowmap_guppy_merge.sorted.bam",
+	#"/clusterfs/rosalind/groups/streetslab/amaslan/nanopore/paper/ctcf/bams/guppywinnow/20210428_8/20210428_8_winnnowmap_guppy_merge.sorted.bam"]
 
-	# insert output file directory
-	out = <output_directory_path>
 
-	# Threshold of p(mA) for including 'A' in output csv, 0-255
-	#set to 0 to read out all A's. Will need to do this if using A position for coverage information
-	thresh = 0
+	# output file directory
+	out = "/home/groups/astraigh/ont_minion/single_molecule_roi/guppy_winnowmap/DiMeLo_cen_enrich_merge2/thresh0/ChrX_CDR_300kb_5745_5775_q10/rawProb_all_revFlip"
+
+	# 0-255
+	thresh = 0 # thresh80
 
 	# will plot non-overlapping features in -window_size to +window_size
 	window_size = 150000
+
+	# number of bases to smooth over for moving average curve
+	smooth = 10 
 
 	# name for plots; 4 per target
 	#names = ["free", "CA","IgG","unt"]
 	names = ["CA"]
 
-	#bed file with chromosome region of interest
+	#names = ["wg_CTCF_CTCF_q4", "wg_CTCF_CTCF_q3", "wg_CTCF_CTCF_q2", "wg_CTCF_CTCF_q1",
+	#"wg_Hia5_CTCF_q4", "wg_Hia5_CTCF_q3", "wg_Hia5_CTCF_q2", "wg_Hia5_CTCF_q1",
+	#"wg_IgG_CTCF_q4", "wg_IgG_CTCF_q3", "wg_IgG_CTCF_q2", "wg_IgG_CTCF_q1",
+	#"wg_inVitro_CTCF_q4", "wg_inVitro_CTCF_q3", "wg_inVitro_CTCF_q2", "wg_inVitro_CTCF_q1",
+	#"wg_untreated_CTCF_q4", "wg_untreated_CTCF_q3", "wg_untreated_CTCF_q2", "wg_untreated_CTCF_q1"]
+
 	bed = "/home/groups/astraigh/ont_minion/single_molecule_roi/beds/HG002_ChrX_dip_200kb_5745_5775.bed"
-	## This example bed file looks like this:
-	'''
-	chrX	57450000	57750000
-	'''
 
 	#### end of parameters and run-specific file paths ####
 

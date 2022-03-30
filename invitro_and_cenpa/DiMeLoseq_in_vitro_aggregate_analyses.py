@@ -1,5 +1,7 @@
 ### README ###
 
+###This file is obsolete and corresponds to the initial submission of the DiMeLoseq manuscript and BioRxiv preprint.###
+
 # #Use this script for plotting in vitro DiMeLoseq data to show aggregate mA/A information
 # plotting histogram of mA/A per read for all libraries
 # plotting average mA/read for each A position along the template
