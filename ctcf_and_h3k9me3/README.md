@@ -22,7 +22,7 @@ Data used to generate figures are a merge of all bam files for a given target (C
 
 ### Fig 4d., Extended Data Fig 7
 #### **Scripts:**
-- phase reads to create HP1 and HP2 bams
+- HaplotypePhasing.txt - instructions to phase reads to create HP1 and HP2 bams
 - single_molecule_browser.py - to create browser views (Fig 4d, Extended Data 7a,b,c)
 - single_molecule_roi_meg_winnow_guppy_ctcf_center.py - overlay graph from this function as in Fig 4b but filter bed file (beds/intersection.motifs.chip.formatted.chm13.bed) to CTCF sites on just the X chromosome
 

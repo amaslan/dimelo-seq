@@ -1,0 +1,88 @@
+#####--------
+####obtain VCF
+
+#first examine different vcf sources for SNPs in GM12878, count how many SNPs on chrX
+
+wget https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz
+wget https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/HG001_GRCh38_1_22_v4.2.1_benchmark.vcf.gz.tbi
+3893574 total
+0 on X
+
+wget https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/SupplementaryFiles/HG001_GRCh38_1_22_v4.2.1_all.vcf.gz
+wget https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/NISTv4.2.1/GRCh38/SupplementaryFiles/HG001_GRCh38_1_22_v4.2.1_all.vcf.gz.tbi
+6472046
+0 on X
+
+wget https://hgdownload.soe.ucsc.edu/gbdb/hg38/platinumGenomes/NA12878.vcf.gz
+wget https://hgdownload.soe.ucsc.edu/gbdb/hg38/platinumGenomes/NA12878.vcf.gz.tbi
+4167951
+127157 on X
+
+#*******use this one! most informative markers on chrX
+wget https://hgdownload.soe.ucsc.edu/gbdb/hg38/platinumGenomes/hg38.hybrid.vcf.gz
+wget https://hgdownload.soe.ucsc.edu/gbdb/hg38/platinumGenomes/hg38.hybrid.vcf.gz.tbi
+4251174
+130962 on X
+
+#lift over from hg38 to chm13 using vcf-liftover software
+wget http://t2t.gi.ucsc.edu/chm13/hub/t2t-chm13-v1.0/hg38Lastz/hg38.t2t-chm13-v1.0.over.chain.gz
+gunzip hg38.t2t-chm13-v1.0.over.chain.gz
+
+/Data/software/VCF-liftover/vcf-liftover.sh hg38.t2t-chm13-v1.0.over.chain hg38.hybrid.vcf.gz NA12878.chm13v1.0.chrX.vcf.gz chrX nostop fast
+bcftools view NA12878.chm13v1.0.vcf.gz | wc -l
+130950
+
+for i in {22..1};do
+	echo $i
+	/Data/software/VCF-liftover/vcf-liftover.sh hg38.t2t-chm13-v1.0.over.chain hg38.hybrid.vcf.gz NA12878.chm13v1.0.chr$i.vcf.gz chr$i nostop fast
+	tabix -p vcf NA12878.chm13v1.0.chr$i.vcf.gz
+done
+
+
+#####--------
+#####run nanomethphase
+
+#test nanomethphase on chrX
+nanomethphase phase --bam /Data/guppywinnow/winnowmap.sorted.chrX.bam --output /Data/guppywinnow/nanomethphase_test --vcf /Data/snps/NA12878.chm13v1.0.chrX.vcf.gz --outformat bam --threads 8 --overwrite
+
+#Number of all reads at processed chroms: 191691
+#Number of nonsuplementary/nonsecondary/notPCRdup/qcPassed mapped reads with quality more than 20 at processed chroms: 160637.
+#Number of reads with at least one tagged phased SNV: 91406
+#Number of HP1 reads: 32148
+#Number of HP2 reads: 32786
+
+
+#split sequencing read bam file by chromosome and run nanomethphase in parallel
+guppy_winnowmap_merge.sorted.bam
+
+#run for chrX first
+	samtools view -@ 8 -o /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chrX.bam /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.bam chrX
+	samtools index -@ 8 /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chrX.bam
+	nanomethphase phase --bam /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chrX.bam --output /Data/guppywinnow/phased/ALLCTCF_guppy_winnowmap_merge_chrX --vcf /Data/snps/NA12878.chm13v1.0.chrX.vcf.gz --outformat bam --threads 8 --overwrite --mapping_quality 10 --min_SNV 1 --average_base_quality 10
+#then autosomes
+for i in {22..1};do
+	echo $i
+	samtools view -@ 8 -o /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chr$i.bam /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.bam chr$i
+	samtools index -@ 8 /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chr$i.bam
+	nanomethphase phase --bam /Data/guppywinnow/ALLCTCF_guppy_winnowmap_merge.sorted.chr$i.bam --output /Data/guppywinnow/phased/ALLCTCF_guppy_winnowmap_merge_chr$i --vcf /Data/snps/NA12878.chm13v1.0.chr$i.vcf.gz --outformat bam --threads 8 --overwrite --mapping_quality 10 --min_SNV 1 --average_base_quality 10
+done
+
+
+#####--------
+#####miscellaneous
+
+#Make het site tracks and find intersection of GM12878 het sites and CTCF motifs
+cp NA12878.chm13v1.0.chrX.vcf.gz NA12878.chm13v1.0.ALL.vcf.gz
+gunzip NA12878.chm13v1.0.ALL.vcf.gz
+for i in {22..1};do
+	echo $i
+	bcftools view -H NA12878.chm13v1.0.chr$i.vcf.gz >>NA12878.chm13v1.0.ALL.vcf
+done
+bcftools sort -o NA12878.chm13v1.0.ALL.sort.vcf.gz -O z NA12878.chm13v1.0.ALL.vcf
+tabix -p vcf NA12878.chm13v1.0.ALL.sort.vcf.gz
+
+bedtools intersect -u -a intersection.motifs.chip.formatted.chm13.bed -b GM12878_hets/NA12878.chm13v1.0.ALL.sort.vcf.gz >intersection.motifs.chip.GM12878het.chm13.bed
+
+
+
+
